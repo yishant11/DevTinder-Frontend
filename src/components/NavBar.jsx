@@ -3,9 +3,9 @@ import React from 'react'
 const NavBar = () => {
   return (
     <div>
-         <div className="navbar bg-base-100 shadow-sm">
-        <div className="flex-1">
-          <a className="btn btn-ghost text-xl">👨‍💻 DevTinder</a>
+         <div className="navbar bg-base-100 shadow-md">
+        <div className="flex-1 ">
+          <a className="btn btn-ghost text-xl">👨‍💻DevTinder</a>
         </div>
         <div className="flex gap-2">
           <input
