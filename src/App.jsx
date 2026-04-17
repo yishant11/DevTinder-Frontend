@@ -1,9 +1,12 @@
 import "./App.css";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <>
-      <div>Hi Logo</div>
+      <div className="w-full h-full bg-black">
+        <NavBar />
+      </div>
     </>
   );
 }
