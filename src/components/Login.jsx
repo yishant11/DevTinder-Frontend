@@ -1,27 +1,37 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import  BASE_URL  from "../utils/constants";
+
 
 const Login = () => {
   const [email, setEmail] = useState("ishant@example.com");
   const [password, setPassword] = useState("ishant123");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:3002/login", {
-        email,
-        password,
-      },{
-        withCredentials: true
-      });
-      console.log(res);
+      const res = await axios.post(
+        `${BASE_URL}/login`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        },
+      );
+      console.log("Login successful", res.data);
+      dispatch(addUser(res.data));
+      navigate("/feed");
     } catch (error) {
       console.log("Login failed", error);
     }
   };
 
-  useEffect(() => {
-    handleLogin();
-  }, []);
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
       <div className="card w-96 bg-gray-900 border border-gray-600 shadow-2xl">
