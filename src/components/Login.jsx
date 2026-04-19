@@ -11,6 +11,8 @@ const Login = () => {
   const [password, setPassword] = useState("ishant123");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+    const [error,setError] = useState();
+
 
   const handleLogin = async () => {
     try {
@@ -28,7 +30,7 @@ const Login = () => {
       dispatch(addUser(res.data));
       navigate("/feed");
     } catch (error) {
-      console.log("Login failed", error);
+      setError(error?.response?.data || "Something went wrong");
     }
   };
 
@@ -74,6 +76,9 @@ const Login = () => {
                 Forgot password?
               </a>
             </label>
+            <div>
+              {error && <p className="text-red-500">{error}</p>}
+            </div>
           </div>
 
           <div className="card-actions justify-center mt-8">

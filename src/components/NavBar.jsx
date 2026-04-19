@@ -1,15 +1,40 @@
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import BASE_URL from "../utils/constants";
+import axios from "axios";
+import { removeUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
 
 const NavBar = () => {
-  const user = useSelector((store)=>store.user);
-  console.log(user);
-  return (
+  const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/logout`,
+        {},
+        {
+          withCredentials: true,
+        },
+      );
+      //clear data from redux store and redirect to login page
+      dispatch(removeUser());
+      navigate("/login")
+      console.log(res);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  return (
     <div>
-         <div className="navbar bg-base-100 shadow-md">
+      <div className="navbar bg-base-100 shadow-md">
         <div className="flex-1 ">
-          <Link to="/" className="btn btn-ghost text-xl">👨‍💻DevTinder</Link>
+          <Link to="/" className="btn btn-ghost text-xl">
+            👨‍💻DevTinder
+          </Link>
         </div>
         <div className="flex gap-2">
           <input
@@ -19,7 +44,9 @@ const NavBar = () => {
           />
           {user && (
             <>
-              <p className="text-black italic text-md flex items-center">Welcome, {user.firstName}</p>
+              <p className="text-black italic text-md flex items-center">
+                Welcome, {user.firstName}
+              </p>
               <div className="dropdown dropdown-end">
                 <div
                   tabIndex={0}
@@ -47,7 +74,9 @@ const NavBar = () => {
                     <a>Settings</a>
                   </li>
                   <li>
-                    <a>Logout</a>
+                    <Link to="/" onClick={handleLogout}>
+                      Logout
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -56,7 +85,7 @@ const NavBar = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
