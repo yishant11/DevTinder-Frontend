@@ -3,16 +3,15 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
-import  BASE_URL  from "../utils/constants";
-
+import BASE_URL from "../utils/constants";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("ishant@example.com");
-  const [password, setPassword] = useState("ishant123");
+  const [email, setEmail] = useState("saumya2@example.com");
+  const [password, setPassword] = useState("saumya123");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-    const [error,setError] = useState();
-
+  const [error, setError] = useState();
 
   const handleLogin = async () => {
     try {
@@ -28,9 +27,13 @@ const Login = () => {
       );
       console.log("Login successful", res.data);
       dispatch(addUser(res.data));
+      toast.success("Login successful!");
+      setError("");
       navigate("/feed");
     } catch (error) {
-      setError(error?.response?.data || "Something went wrong");
+      const errorMsg = error?.response?.data || "Something went wrong";
+      setError(errorMsg);
+      toast.error(errorMsg);
     }
   };
 
@@ -76,9 +79,7 @@ const Login = () => {
                 Forgot password?
               </a>
             </label>
-            <div>
-              {error && <p className="text-red-500">{error}</p>}
-            </div>
+            <div>{error && <p className="text-red-500">{error}</p>}</div>
           </div>
 
           <div className="card-actions justify-center mt-8">

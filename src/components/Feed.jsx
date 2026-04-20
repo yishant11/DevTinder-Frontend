@@ -26,7 +26,7 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-violet-300 py-8">
+    <div className="min-h-screen bg-white py-8">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Discover People</h1>
         {feed ? (

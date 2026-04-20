@@ -4,6 +4,7 @@ import BASE_URL from "../utils/constants";
 import axios from "axios";
 import { removeUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 const NavBar = () => {
   const user = useSelector((store) => store.user);
@@ -22,9 +23,11 @@ const NavBar = () => {
       //clear data from redux store and redirect to login page
       dispatch(removeUser());
       navigate("/login")
-      console.log(res);
+      toast.success(res.data.message || "Logout successful!");
     } catch (error) {
       console.error("Logout failed:", error);
+      toast.error("Logout failed!");
+
     }
   };
 
