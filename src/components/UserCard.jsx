@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, actions }) => {
   if (!user) return null;
 
   const { firstName, lastName, email, gender, photoUrl,age } = user;
@@ -44,6 +44,13 @@ const UserCard = ({ user }) => {
         <p className="text-sm text-blue-600 mt-2 break-all">
           {age}
         </p>
+        
+        {/* Action Buttons */}
+        {actions && (
+          <div className="mt-4 flex gap-2">
+            {actions}
+          </div>
+        )}
       </div>
 
     </div>
