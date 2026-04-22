@@ -8,6 +8,7 @@ import { appStore } from "../src/utils/appStore";
 import Feed from "./components/Feed";
 import Body from "./components/Body";
 import Profile from "./components/Profle";
+import Connection from "./components/Connection";
 
 function App() {
   return (
@@ -18,16 +19,9 @@ function App() {
           <Route path="/" element={<Body />}>
             <Route index element={<div>Home</div>} />
             <Route path="feed" element={<Feed />} />
-            <Route
-              path="profile"
-              element={
-                <div>
-                  <Profile />
-                </div>
-              }
-            />
+            <Route path="profile" element={<Profile />} />
+            <Route path="connection" element={<Connection />} />
           </Route>
-
           <Route path="/login" element={<Login />} />
           {/* <Route path="/signup" element={<Signup />} /> */}
         </Routes>

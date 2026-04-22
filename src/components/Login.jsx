@@ -7,8 +7,8 @@ import BASE_URL from "../utils/constants";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("saumya2@example.com");
-  const [password, setPassword] = useState("saumya123");
+  const [email, setEmail] = useState("ananya@example.com");
+  const [password, setPassword] = useState("ananya123");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState();
