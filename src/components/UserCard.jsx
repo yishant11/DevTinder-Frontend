@@ -1,9 +1,30 @@
-import React from "react";
+import BASE_URL from "../utils/constants";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { removeUserfromFeed } from "../utils/feedSlice";
 
-const UserCard = ({ user, actions }) => {
+const UserCard = ({ user, hideActions = false }) => {
+  const dispatch = useDispatch();
+
+  const handleSendRequest = (status, user_id) => {
+    try {
+      const res = axios.post(
+        BASE_URL + "/request/send/" + status + "/" + user_id,
+        {},
+        {
+          withCredentials: true,
+        },
+      );
+      console.log(res);
+      dispatch(removeUserfromFeed(user_id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!user) return null;
 
-  const { firstName, lastName, email, gender, photoUrl,age } = user;
+  const { firstName, lastName, email, gender, photoUrl, age } = user;
 
   const getGenderIcon = () => {
     return gender === "male" ? "👨" : gender === "female" ? "👩" : "👤";
@@ -11,7 +32,6 @@ const UserCard = ({ user, actions }) => {
 
   return (
     <div className="w-80 max-w-sm mx-auto rounded-xl shadow-md overflow-hidden bg-white">
-      
       {/* User Photo */}
       <div className="h-56 bg-gray-200">
         {photoUrl ? (
@@ -37,22 +57,18 @@ const UserCard = ({ user, actions }) => {
           {gender} {getGenderIcon()}
         </p>
 
-        <p className="text-sm text-blue-600 mt-2 break-all">
-          {email}
-        </p>
-        
-        <p className="text-sm text-blue-600 mt-2 break-all">
-          {age}
-        </p>
-        
+        <p className="text-sm text-blue-600 mt-2 break-all">{email}</p>
+
+        <p className="text-sm text-blue-600 mt-2 break-all">{age}</p>
+
         {/* Action Buttons */}
-        {actions && (
+        {!hideActions && (
           <div className="mt-4 flex gap-2">
-            {actions}
+            <button className="btn btn-error" onClick={() => handleSendRequest("ignored", user._id)}>Ignore</button>
+            <button className="btn btn-primary" onClick={() => handleSendRequest("interested", user._id)}>Interested</button>
           </div>
         )}
       </div>
-
     </div>
   );
 };

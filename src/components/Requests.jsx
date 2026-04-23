@@ -9,6 +9,22 @@ const Requests = () => {
   const dispatch = useDispatch();
   const requests = useSelector((store) => store.request);
 
+  const reviewRequest = async (status, _id) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        {
+          withCredentials: true,
+        },
+      );
+      const reviewRequestData = res.data.data;
+      console.log("Review requests are here:", reviewRequestData);
+    } catch (error) {
+      console.log("Error in review request:", error);
+    }
+  };
+
   const fetchRequest = async () => {
     const res = await axios.get(BASE_URL + "/user/requests/received", {
       withCredentials: true,
@@ -33,19 +49,20 @@ const Requests = () => {
       <div className="text-2xl font-bold text-center mb-6">REQUESTS</div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {requests.map((request) => (
-          <UserCard 
-            key={request._id} 
+          <UserCard
+            key={request._id}
             user={request.fromUserId}
             actions={
               <>
-                <button className="btn btn-success">Accept</button>
-                <button className="btn btn-warning">Reject</button>
+                <div className="mt-4 flex gap-2">
+                  <button className="btn btn-error" onClick={() => reviewRequest("ignored", request._id)}>Ignore</button>
+                  <button className="btn btn-primary" onClick={() => reviewRequest("accepted", request._id)}>Interested</button>
+                </div>
               </>
             }
           />
         ))}
       </div>
-      
     </div>
   );
 };

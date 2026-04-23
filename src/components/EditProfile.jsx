@@ -106,7 +106,7 @@ const EditProfile = ({ user }) => {
 
           {/* User Card Preview */}
           <div className="w-full lg:w-96 shrink-0 ">
-            <UserCard user={{ firstName, lastName, age }} />
+            <UserCard user={{ firstName, lastName, age }} hideActions={true} />
           </div>
         </div>
       </div>
