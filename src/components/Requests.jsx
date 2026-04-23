@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import BASE_URL from "../utils/constants";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addRequest } from "../utils/requestSlice";
+import { addRequest, removeRequestById } from "../utils/requestSlice";
 import UserCard from "./UserCard";
 
 const Requests = () => {
@@ -20,21 +20,23 @@ const Requests = () => {
       );
       const reviewRequestData = res.data.data;
       console.log("Review requests are here:", reviewRequestData);
+      // Remove the reviewed request from the UI
+      dispatch(removeRequestById(_id));
     } catch (error) {
       console.log("Error in review request:", error);
     }
   };
 
-  const fetchRequest = async () => {
+  const fetchRequest = useCallback(async () => {
     const res = await axios.get(BASE_URL + "/user/requests/received", {
       withCredentials: true,
     });
     const requestsData = res.data.data;
     dispatch(addRequest(requestsData));
-  };
+  }, [dispatch]);
   useEffect(() => {
     fetchRequest();
-  }, []);
+  }, [fetchRequest]);
 
   if (!requests || requests.length === 0) {
     return (
@@ -55,8 +57,8 @@ const Requests = () => {
             actions={
               <>
                 <div className="mt-4 flex gap-2">
-                  <button className="btn btn-error" onClick={() => reviewRequest("ignored", request._id)}>Ignore</button>
-                  <button className="btn btn-primary" onClick={() => reviewRequest("accepted", request._id)}>Interested</button>
+                  <button className="btn btn-error" onClick={() => reviewRequest("rejected", request._id)}>Reject</button>
+                  <button className="btn btn-primary" onClick={() => reviewRequest("accepted", request._id)}>Accept</button>
                 </div>
               </>
             }

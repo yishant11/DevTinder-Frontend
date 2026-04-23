@@ -3,7 +3,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { removeUserfromFeed } from "../utils/feedSlice";
 
-const UserCard = ({ user, hideActions = false }) => {
+const UserCard = ({ user, hideActions = false, actions }) => {
   const dispatch = useDispatch();
 
   const handleSendRequest = (status, user_id) => {
@@ -62,11 +62,17 @@ const UserCard = ({ user, hideActions = false }) => {
         <p className="text-sm text-blue-600 mt-2 break-all">{age}</p>
 
         {/* Action Buttons */}
-        {!hideActions && (
+        {actions ? (
           <div className="mt-4 flex gap-2">
-            <button className="btn btn-error" onClick={() => handleSendRequest("ignored", user._id)}>Ignore</button>
-            <button className="btn btn-primary" onClick={() => handleSendRequest("interested", user._id)}>Interested</button>
+            {actions}
           </div>
+        ) : (
+          !hideActions && (
+            <div className="mt-4 flex gap-2">
+              <button className="btn btn-error" onClick={() => handleSendRequest("ignored", user._id)}>Ignore</button>
+              <button className="btn btn-primary" onClick={() => handleSendRequest("interested", user._id)}>Interested</button>
+            </div>
+          )
         )}
       </div>
     </div>
