@@ -5,6 +5,7 @@ import axios from "axios";
 import { removeUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
+import Premium from "./Premium";
 
 const NavBar = () => {
   const user = useSelector((store) => store.user);
@@ -78,6 +79,9 @@ const NavBar = () => {
                   </li>
                   <li>
                     <Link to="/requests">Requests</Link>
+                  </li>
+                  <li>
+                    <Link to="/premium">Premium</Link>
                   </li>
                   <li>
                     <Link to="/" onClick={handleLogout}>
