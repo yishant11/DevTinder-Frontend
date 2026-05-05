@@ -2,10 +2,12 @@ import { CheckIcon, StarIcon, CheckBadgeIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import BASE_URL from "../utils/constants";
 import { useNavigate, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Premium = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
 
   const handleBuyClick = async (type) => {
@@ -39,6 +41,8 @@ const Premium = () => {
         color: "#3399cc",
       },
       handler: () => {
+        // Update Redux store immediately so blue tick + premium status show right away
+        dispatch(addUser({ ...user, isPremium: true, membershipType: type }));
         navigate("/thank-you?plan=" + type);
       },
     };
