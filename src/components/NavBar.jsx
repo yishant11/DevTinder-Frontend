@@ -5,7 +5,7 @@ import axios from "axios";
 import { removeUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
-import Premium from "./Premium";
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 
 const NavBar = () => {
   const user = useSelector((store) => store.user);
@@ -48,8 +48,11 @@ const NavBar = () => {
           />
           {user && (
             <>
-              <p className="text-black italic text-md flex items-center">
+              <p className="text-black italic text-md flex items-center gap-1">
                 Welcome, {user.firstName}
+                {user.isPremium && (
+                  <CheckBadgeIcon className="h-5 w-5 text-blue-500" title="Premium Member" />
+                )}
               </p>
               <div className="dropdown dropdown-end">
                 <div
