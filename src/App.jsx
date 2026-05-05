@@ -11,6 +11,7 @@ import Profile from "./components/Profle";
 import Connection from "./components/Connection";
 import Requests from "./components/Requests";
 import Premium from "./components/Premium";
+import ThankYou from "./components/ThankYou";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="connection" element={<Connection />} />
             <Route path="requests" element={<Requests />} />
             <Route path="premium" element={<Premium />} />
+            <Route path="thank-you" element={<ThankYou />} />
           </Route>
           <Route path="/login" element={<Login />} />
         </Routes>

@@ -1,8 +1,11 @@
 import { CheckIcon, StarIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import BASE_URL from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const Premium = () => {
+  const navigate = useNavigate();
+
   const handleBuyClick = async (type) => {
     const order = await axios.post(
       `${BASE_URL}/payment/create-order`,
@@ -32,6 +35,9 @@ const Premium = () => {
       },
       theme: {
         color: "#3399cc",
+      },
+      handler: () => {
+        navigate("/thank-you?plan=" + type);
       },
     };
     const rzp = new window.Razorpay(options);
